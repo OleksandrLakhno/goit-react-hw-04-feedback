@@ -6,7 +6,7 @@ function FeedbackOptions({ onIncrement, options }) {
   return (
           <div>
       {options.map(option => (
-        <button className={f.buttons} name={option} key={option} onClick = { onIncrement }>
+        <button className={f.buttons} name={option} key={option} onClick = {()=> onIncrement(option) }>
           { option.toUpperCase()}
         </button>
       ))}

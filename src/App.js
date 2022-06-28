@@ -5,29 +5,44 @@ import Statistic from "components/Feedback/Statistic";
 import Notification from "components/Feedback/Notification";
   
 function App () {
-  const [feedback,setFeedback] = useState({good:0,neutral: 0,bad: 0})
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+  
+  const keys = ['good','neutral','bad'];
 
-  const handleIncrement = (e) => {
-    const stateKey = e.target.name;
-    setFeedback(state => ({ ...feedback,[stateKey]: state[stateKey] + 1 }));
+  const handleIncrement = (option) => {
+    console.log(option);
+    switch (option) {
+      case 'good':
+        setGood((prevState) => prevState + 1);
+        break;
+      case 'neutral':
+        setNeutral((prevState)=> prevState + 1);
+        break;
+      
+      case 'bad':
+        setBad((prevState)=> prevState + 1);
+        break;
+      
+      default:
+        return;
+    }
   };
 
   const countTotalFeedback = () => {
-    return Object.values(feedback).reduce((acc, feedback) => {return acc + feedback } , 0);
+    return good + neutral + bad;
   };
   const  countPositiveFeedbackPercentage = () => { 
-    const { good } = feedback;
     return Number(good >= 1 ? ((good / countTotalFeedback()) * 100).toFixed(0) : 0);
   };
-  
-    const { good,neutral,bad } = feedback;
    
     return (
       <>
         <Section title={"Please leave feedback"}>
           <FeedbackOptions
             onIncrement={handleIncrement}
-            options={ Object.keys(feedback)}
+            options={ keys}
           />
         </Section>
         <Section title={"Statistic"}>
